@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import Tag, Activity, Report
 
-# Register your models here.
+for app in (Tag, Activity, Report,):
+    admin.site.register(app)
