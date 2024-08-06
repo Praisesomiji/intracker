@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User, Group
 from products.models import Product
+from datetime import timedelta
 
 class Week(models.Model):
     title = models.CharField(max_length=100)
