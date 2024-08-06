@@ -6,5 +6,5 @@ class InternAdminSite(AdminSite):
     site_title = _("Intern Site UI")
     index_title = _("Welcome to the Internship Tracker")
 
-intern_admin_site = InternAdminSite(name='intern')
+intern_ui = InternAdminSite(name='intern')
 
