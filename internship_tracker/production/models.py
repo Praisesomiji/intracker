@@ -23,7 +23,7 @@ class Feedback(models.Model):
     ]
     production = models.ForeignKey(Production, on_delete=models.CASCADE)
     comment = models.TextField()
-    swot = models.CharField(max_length=10, choices=SWOT_CHOICES)
+    swot = models.CharField(max_length=11, choices=SWOT_CHOICES)
     
     def __str__(self):
         return f"Feedback on {self.production}"
