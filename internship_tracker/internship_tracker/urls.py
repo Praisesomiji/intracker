@@ -16,7 +16,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.shortcuts import redirect
+from internship_tracker.admin import intern_ui
+
+def redirect_to_proper_admin(request):
+    if request.user.is_superuser:
+        return redirect('/admin/')
+    elif request.user.groups.filter(name='interns').exists():
+        return redirect('/intern/')
+    return redirect('/admin/login/')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('intern/', intern_ui.urls),
+    path('', redirect_to_proper_admin),
 ]
+
