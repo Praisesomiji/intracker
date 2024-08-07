@@ -1,0 +1,39 @@
+/* Header background color */
+#header {
+    background-color: #4CAF50; /* Green */
+}
+
+/* Sidebar background color */
+#sidebar {
+    background-color: #66BB6A; /* Lighter Green */
+}
+
+/* Main content area */
+#content {
+    background-color: #fff; /* White */
+}
+
+/* Primary buttons */
+.button, .action-button {
+    background-color: #4CAF50; /* Green */
+    border-color: #4CAF50;
+    color: #fff;
+}
+
+/* Active or selected items */
+.selected {
+    background-color: #388E3C; /* Darker Green */
+    color: #fff;
+}
+
+/* Hover effects for buttons */
+.button:hover, .action-button:hover {
+    background-color: #388E3C; /* Darker Green */
+    border-color: #388E3C;
+}
+
+/* Links */
+a {
+    color: #4CAF50;
+}
+

@@ -1,0 +1,10 @@
+/* Header background color */
+#header {
+    background-color: #ff3333; /* Darker Red */
+}
+
+/* App Columns */
+.module caption, div.breadcrumbs {
+    background-color: #ff6666; /* Lighter Red */
+}
+

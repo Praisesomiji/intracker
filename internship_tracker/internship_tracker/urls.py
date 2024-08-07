@@ -19,7 +19,7 @@ from django.urls import path
 from django.shortcuts import redirect
 from internship_tracker.admin import intern_ui
 
-def redirect_to_proper_admin(request):
+def redirect_to_proper_path(request):
     if request.user.is_superuser:
         return redirect('/admin/')
     elif request.user.groups.filter(name='interns').exists():
@@ -29,6 +29,6 @@ def redirect_to_proper_admin(request):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('intern/', intern_ui.urls),
-    path('', redirect_to_proper_admin),
+    path('', redirect_to_proper_path),
 ]
 
