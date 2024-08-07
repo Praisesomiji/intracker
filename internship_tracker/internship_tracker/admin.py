@@ -6,25 +6,12 @@ from django.utils.translation import gettext_lazy as _
 
 # Define a custom admin site for interns
 class InternAdminSite(AdminSite):
-    site_header = "Intern Admin"
-    site_title = "Intern Administration"
-    index_title = "Welcome to the Intern Admin Portal"
-
-    # Override each_context to customize app labels in the admin site
-    def each_context(self, request):
-        context = super().each_context(request)
-        context['available_apps'] = [
-            {
-                'name': app['name'].replace('Authentication and Authorization', 'Accounts'),
-                'app_label': app['app_label'],
-                'app_url': app['app_url'],
-                'models': app['models']
-            } for app in context['available_apps']
-        ]
-        return context
+    site_header = ("Internship Tracker")
+    site_title = ("Intern Site UI")
+    index_title = ("Welcome to the Internship Tracker")
 
 # Create an instance of the custom admin site
-intern_ui = InternAdminSite(name='intern_admin')
+intern_ui = InternAdminSite(name='intern')
 
 # Define a custom UserAdmin class for the intern admin site
 class UserAdmin(DefaultUserAdmin):
