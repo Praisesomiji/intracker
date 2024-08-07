@@ -1,0 +1,10 @@
+{% extends "admin/base_site.html" %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">Intern Dashboard</a></h1>
+{% endblock %}
+
+{% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/intern_ui.css' %}">
+{% endblock %}
+
