@@ -34,6 +34,7 @@ def assign_permissions():
         ('delete_report', 'report'),
         ('view_group', 'group'),
         ('view_user', 'user'),
+        ('change_user', 'user'),
     ]
 
     # Assign permissions to the intern group
