@@ -1,5 +1,16 @@
 from django.contrib import admin
 from .models import Week, Unit, Instruction
+from internship_tracker.admin import intern_ui
 
-for app in (Week, Unit, Instruction,):
-    admin.site.register(app)
+for model in (Week, Unit, Instruction,):
+    admin.site.register(model)
+
+class WeekAdmin(admin.ModelAdmin):
+    list_display = ('title', 'start_date', 'end_date')
+
+for ui in (
+        {'model': Week, 'admin': WeekAdmin}, 
+        {'model': Unit, 'admin': UnitAdmin,) 
+        {'model': Instruction, 'admin': InstructionAdmin}
+        ):
+    intern_ui.register(ui['model'], ui['admin'])
