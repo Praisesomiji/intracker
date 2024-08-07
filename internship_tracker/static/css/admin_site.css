@@ -4,7 +4,7 @@
 }
 
 /* App Columns */
-.module caption, div.breadcrumbs {
+.module caption, .module h2, div.breadcrumbs {
     background-color: #ff6666; /* Lighter Red */
 }
 
