@@ -9,7 +9,7 @@ def assign_permissions():
     intern_group, created = Group.objects.get_or_create(name='Interns')
 
     # Get content types for the models
-    models = [Week, Instruction, Production, Feedback, Activity, Report, Group]
+    models = [Week, Instruction, Production, Feedback, Activity, Report, Group, User]
     content_types = {model.__name__.lower(): ContentType.objects.get_for_model(model) for model in models}
 
     # Define required permissions
@@ -33,6 +33,7 @@ def assign_permissions():
         ('change_report', 'report'),
         ('delete_report', 'report'),
         ('view_group', 'group'),
+        ('view_user', 'user'),
     ]
 
     # Assign permissions to the intern group
