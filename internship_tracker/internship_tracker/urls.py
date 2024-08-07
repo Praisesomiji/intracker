@@ -24,7 +24,7 @@ def redirect_to_proper_admin(request):
         return redirect('/admin/')
     elif request.user.groups.filter(name='interns').exists():
         return redirect('/intern/')
-    return redirect('/admin/login/')
+    return redirect('/intern/login/')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
