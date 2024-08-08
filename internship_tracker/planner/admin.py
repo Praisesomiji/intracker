@@ -2,9 +2,47 @@ from django.contrib import admin
 from .models import Week, Unit, Instruction
 from internship_tracker.admin import intern_ui
 from django.contrib.auth.models import User, Group
+from django.utils.html import format_html
+from django.urls import reverse
+
+class WeekAdmin(admin.ModelAdmin):
+    list_display = ('title', 'start_date', 'end_date', 'instructions')
+
+    def instructions(self, obj):
+        instructions = obj.instruction_set.all()
+        if instructions.exists():
+            links = [
+                format_html(
+                    '<a href="{}">{}</a>',
+                    reverse("admin:planner_instruction_change", args=[instruction.pk], current_app=self.admin_site.name),
+                    instruction.description
+                )
+                for instruction in instructions
+            ]
+            return format_html(", ".join(links))
+        return "None"
+
+    instructions.short_description = "Instructions"
+
 
 class InstructionAdmin(admin.ModelAdmin):
-    list_display = ('week', 'product', 'intern', 'team', 'unit', 'description')
+    list_display = ('week', 'product', 'intern', 'team', 'unit', 'description', 'productions')
+
+    def productions(self, obj):
+        productions = obj.production_set.all()
+        if productions.exists():
+            links = [
+                format_html(
+                    '<a href="{}">{}</a>',
+                    reverse("admin:production_production_change", args=[production.pk], current_app=self.admin_site.name),
+                    production.description
+                )
+                for production in productions
+            ]
+            return format_html(", ".join(links))
+        return "None"
+
+    productions.short_description = "Productions"
 
     def get_queryset(self, request):
         # Get the original queryset
@@ -26,8 +64,8 @@ class InstructionAdmin(admin.ModelAdmin):
 
 for site in (admin.site, intern_ui,):
     site.register(Instruction, InstructionAdmin)
+    site.register(Week, WeekAdmin)
 
-for model in (Week, Unit,):
-    admin.site.register(model)
-    intern_ui.register(model)
+admin.site.register(Unit)
+intern_ui.register(Unit)
 

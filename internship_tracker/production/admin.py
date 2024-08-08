@@ -2,9 +2,27 @@ from django.contrib import admin
 from .models import Production, Feedback
 from internship_tracker.admin import intern_ui
 from planner.models import Instruction
+from django.utils.html import format_html
+from django.urls import reverse
 
 class ProductionAdmin(admin.ModelAdmin):
-    list_display = ('instruction', 'description', 'deadline', 'submitted')
+    list_display = ('instruction', 'description', 'deadline', 'submitted', 'feedbacks')
+
+    def feedbacks(self, obj):
+        feedbacks = obj.feedback_set.all()
+        if feedbacks.exists():
+            links = [
+                format_html(
+                    '<a href="{}">{}</a>',
+                    reverse("admin:production_feedback_change", args=[feedback.pk], current_app=self.admin_site.name),
+                    feedback.comment
+                )
+                for feedback in feedbacks
+            ]
+            return format_html(", ".join(links))
+        return "None"
+
+    feedbacks.short_description = "Feedbacks"
 
     def get_queryset(self, request):
         # Get the original queryset
