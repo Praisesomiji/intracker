@@ -27,10 +27,9 @@ class ReportAdmin(admin.ModelAdmin):
         return qs.filter(activity__production__instruction__intern=request.user) | qs.filter(activity__production__instruction__team__in=request.user.groups.all())
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "production" and not request.user.is_superuser:
-            kwargs["queryset"] = Production.objects.filter(instruction__intern=request.user) | Production.objects.filter(instruction__team__in=request.user.groups.all())
+        if db_field.name == "activity" and not request.user.is_superuser:
+            kwargs["queryset"] = Activity.objects.filter(production__instruction__intern=request.user) | Activity.objects.filter(production__instruction__team__in=request.user.groups.all())
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
-
 
 for site in (admin.site, intern_ui,):
     site.register(Activity, ActivityAdmin)
