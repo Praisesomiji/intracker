@@ -4,12 +4,22 @@ from internship_tracker.admin import intern_ui
 from django.contrib.auth.models import User, Group
 from django.utils.html import format_html
 from django.urls import reverse
+from django.db.models import Q
 
 class WeekAdmin(admin.ModelAdmin):
     list_display = ('title', 'start_date', 'end_date', 'instructions')
 
     def instructions(self, obj):
-        instructions = obj.instruction_set.all()
+        user = self.request.user  # Get the current user
+
+        # Filter instructions based on the current user's permissions
+        if user.is_superuser:
+            instructions = obj.instruction_set.all()
+        else:
+            instructions = obj.instruction_set.filter(
+                Q(intern=user) | Q(team__in=user.groups.all())
+            ).distinct()
+
         if instructions.exists():
             links = [
                 format_html(
@@ -23,6 +33,11 @@ class WeekAdmin(admin.ModelAdmin):
         return "None"
 
     instructions.short_description = "Instructions"
+
+    def get_queryset(self, request):
+        """Override to make request available in instructions method."""
+        self.request = request
+        return super().get_queryset(request)
 
 
 class InstructionAdmin(admin.ModelAdmin):
