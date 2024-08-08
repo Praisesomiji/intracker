@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import Production, Feedback
 from internship_tracker.admin import intern_ui
+from planner.models import Instruction
 
 class ProductionAdmin(admin.ModelAdmin):
     list_display = ('instruction', 'description', 'deadline', 'submitted')
@@ -28,6 +29,12 @@ class FeedbackAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             return qs
         return qs.filter(production__instruction__intern=request.user) | qs.filter(production__instruction__team__in=request.user.groups.all())
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "production" and not request.user.is_superuser:
+            kwargs["queryset"] = Production.objects.filter(instruction__intern=request.user) | Production.objects.filter(instruction__team__in=request.user.groups.all())
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
 
 for site in (admin.site, intern_ui,):
     site.register(Production, ProductionAdmin)
