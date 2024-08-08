@@ -7,6 +7,7 @@ from django.urls import reverse
 
 class ActivityAdmin(admin.ModelAdmin):
     list_display = ('production', 'title', 'description', 'location', 'reports')
+    search_fields = ['title', 'description']
 
     def reports(self, obj):
         reports = obj.report_set.all()
@@ -37,6 +38,7 @@ class ActivityAdmin(admin.ModelAdmin):
 
 class ReportAdmin(admin.ModelAdmin):
     list_display = ('activity', 'comment', 'type')
+    search_fields = ['type']
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)

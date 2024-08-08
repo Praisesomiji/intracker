@@ -8,6 +8,7 @@ from django.db.models import Q
 
 class WeekAdmin(admin.ModelAdmin):
     list_display = ('title', 'start_date', 'end_date', 'instructions')
+    search_fields = ['title']
 
     def instructions(self, obj):
         user = self.request.user  # Get the current user
@@ -42,6 +43,7 @@ class WeekAdmin(admin.ModelAdmin):
 
 class InstructionAdmin(admin.ModelAdmin):
     list_display = ('week', 'product', 'intern', 'team', 'unit', 'description', 'productions')
+    search_fields = ['description']
 
     def productions(self, obj):
         productions = obj.production_set.all()

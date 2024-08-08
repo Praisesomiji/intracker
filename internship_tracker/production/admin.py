@@ -7,6 +7,7 @@ from django.urls import reverse
 
 class ProductionAdmin(admin.ModelAdmin):
     list_display = ('instruction', 'description', 'deadline', 'submitted', 'feedbacks')
+    search_fields = ['description']
 
     def feedbacks(self, obj):
         feedbacks = obj.feedback_set.all()
@@ -41,6 +42,7 @@ class ProductionAdmin(admin.ModelAdmin):
 
 class FeedbackAdmin(admin.ModelAdmin):
     list_display = ('production', 'comment', 'swot')
+    search_fields = ['swot']
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
