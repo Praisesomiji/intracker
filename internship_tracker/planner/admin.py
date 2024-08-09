@@ -84,5 +84,4 @@ for site in (admin.site, intern_ui,):
     site.register(Week, WeekAdmin)
 
 admin.site.register(Unit)
-intern_ui.register(Unit)
 
