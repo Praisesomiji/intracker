@@ -1,15 +1,16 @@
 from django.contrib.auth.models import User, Group, Permission
 from django.contrib.contenttypes.models import ContentType
-from planner.models import Week, Instruction
+from planner.models import Week, Instruction, Document
 from production.models import Production, Feedback
 from activities.models import Activity, Report
+from events.models import Workshop, Detail
 
 def assign_permissions():
     # Create or get the intern group
     intern_group, created = Group.objects.get_or_create(name='Interns')
 
     # Get content types for the models
-    models = [Week, Instruction, Production, Feedback, Activity, Report, Group, User]
+    models = [Week, Instruction, Production, Feedback, Activity, Report, Group, User, Document, Workshop, Detail]
     content_types = {model.__name__.lower(): ContentType.objects.get_for_model(model) for model in models}
 
     # Define required permissions
@@ -35,6 +36,9 @@ def assign_permissions():
         ('view_group', 'group'),
         ('view_user', 'user'),
         ('change_user', 'user'),
+        ('view_document', 'document'),
+        ('view_workshop', 'workshop'),
+        ('view_detail', 'detail'),
     ]
 
     # Assign permissions to the intern group

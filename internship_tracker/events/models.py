@@ -1,6 +1,6 @@
 from django.db import models
 
-class Details(models.Model):
+class Detail(models.Model):
     date = models.DateField()
     time = models.TimeField()
     venue = models.CharField(max_length=255)
@@ -11,7 +11,7 @@ class Details(models.Model):
 class Workshop(models.Model):
     title = models.CharField(max_length=255)
     about = models.TextField()
-    details = models.ManyToManyField(Details, related_name="workshops")
+    detail = models.ManyToManyField(Detail, related_name="workshops")
 
     def __str__(self):
         return self.title
