@@ -1,10 +1,20 @@
 from django.contrib import admin
-from .models import Week, Unit, Instruction
+from .models import Week, Unit, Instruction, Document
 from internship_tracker.admin import intern_ui
 from django.contrib.auth.models import User, Group
 from django.utils.html import format_html
 from django.urls import reverse
 from django.db.models import Q
+
+class DocumentAdmin(admin.ModelAdmin):
+    list_display = ('title', 'uploaded_at')
+    search_fields = ('title',)
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(user=request.user)
 
 class WeekAdmin(admin.ModelAdmin):
     list_display = ('title', 'start_date', 'end_date', 'instructions')
@@ -84,4 +94,6 @@ for site in (admin.site, intern_ui,):
     site.register(Week, WeekAdmin)
 
 admin.site.register(Unit)
+admin.site.register(Document, DocumentAdmin)
+intern_ui.register(Document, DocumentAdmin)
 
