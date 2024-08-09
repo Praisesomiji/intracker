@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'planner',
     'production',
     'activities',
+    'events',
 ]
 
 MIDDLEWARE = [
