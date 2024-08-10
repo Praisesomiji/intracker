@@ -5,8 +5,10 @@ from django.contrib.auth.models import User, Group
 from django.utils.html import format_html
 from django.urls import reverse
 from django.db.models import Q
+from .forms import DocumentForm
 
 class DocumentAdmin(admin.ModelAdmin):
+    form = DocumentForm
     list_display = ('title', 'uploaded_at')
     search_fields = ('title',)
 

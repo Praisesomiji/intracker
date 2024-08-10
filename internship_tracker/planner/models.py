@@ -2,10 +2,24 @@ from django.db import models
 from django.contrib.auth.models import User, Group
 from products.models import Product
 from datetime import timedelta
+from django.core.validators import FileExtensionValidator
+from django.core.exceptions import ValidationError
+
+def validate_file_size(value):
+    filesize = value.size
+    if filesize > 10 * 1024 * 1024:  # 10 MB limit
+        raise ValidationError("The maximum file size that can be uploaded is 10MB")
+    return value
 
 class Document(models.Model):
     title = models.CharField(max_length=255)
-    file = models.FileField(upload_to='documents/')
+    file = models.FileField(
+        upload_to='documents/',
+        validators=[
+            FileExtensionValidator(allowed_extensions=['pdf']),
+            validate_file_size
+        ]
+    )
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
