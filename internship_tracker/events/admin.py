@@ -18,9 +18,10 @@ class WorkshopAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        if request.user.is_superuser:
-            return qs
-        return qs.filter(detail__workshops__intern=request.user) | qs.filter(detail__workshops__team__in=request.user.groups.all())
+        return qs
+        # if request.user.is_superuser:
+        #     return qs
+        # return qs.filter(detail__workshops__intern=request.user) | qs.filter(detail__workshops__team__in=request.user.groups.all())
 
     # Override the save method in the WorkshopAdmin to handle duplicates gracefully by checking for existing relations before saving
 
@@ -41,5 +42,5 @@ class DetailAdmin(admin.ModelAdmin):
 admin.site.register(Workshop, WorkshopAdmin)
 admin.site.register(Detail, DetailAdmin)
 intern_ui.register(Workshop, WorkshopAdmin)
-intern_ui.register(Detail, DetailAdmin)
+#intern_ui.register(Detail, DetailAdmin)
 
